@@ -85,7 +85,7 @@ void loop() {
   packetUpdate();
   setPwmSpeed(map(internalTemperture, 72, 120, 0, 100));
   // lockProcessor(isLocked);
-  ledProcessor();
+  //ledProcessor();
   livelinessProbe();
 }
 
@@ -148,9 +148,9 @@ bool packetUpdate() {
         west_light = esp32_data[1];
         break;
       case 18:
-        int west_red = esp32_data[2];
-        int west_green = esp32_data[3];
-        int west_blue = esp32_data[4];
+        int west_red = esp32_data[1];
+        int west_green = esp32_data[2];
+        int west_blue = esp32_data[3];
         westColor(west_red, west_green, west_blue);
         break;
       case EAST_LIGHT:
