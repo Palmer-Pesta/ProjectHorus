@@ -25,7 +25,7 @@
 #define MOTOR5_4 39
 
 //  How many steps per turn
-#define stepsPerRevolution 200
+#define STEPS_PER_REVOLUTION 200
 #define BASE_MOTOR_SPEED 30
 
 // Limit Switch Pins
@@ -57,6 +57,7 @@
 
 // Solenoid
 #define SOLENOID_PIN 18
+#define UNLOCK_TIMEOUT 120000
 
 // Fan PWM Controller
 #define FAN_CONTROL_PIN 13
