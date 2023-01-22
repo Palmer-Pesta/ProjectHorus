@@ -1,35 +1,29 @@
 // External Imports
-#include <Stepper.h>
-#include <FastLED.h>
-#include <HardwareSerial.h>
+#include <Arduino.h>
 // Internal Imports
-#include "../lib/solenoid.cpp"
+#include "communication.h"
+#include "fan.h"
+#include "leds.h"
+#include "motors.h"
+#include "solenoid.h"
+#include "config.h"
 
-HorusLeds* leds = new HorusLeds();
-HorusSolenoid* solenoid = new HorusSolenoid();
-HorusFan* fan = new HorusFan();
-HorusCommunication* commmunication = new HorusCommunication();
-HorusMotor* motor = new HorusMotor();
+
+// Create Class Instantances
+HorusCommunication communication;
+HorusFan fan;
+HorusLeds leds;
+HorusMotor motor;
+HorusSolenoid solenoid;
 
 void setup() {
   Serial.begin(SERIAL_BAUDRATE);
-  motor->motorSetup();
-  leds->ledSetup();
-  fan->fanSetup();
-  solenoid->solenoidSetup();
-  commmunication->livelinessSetup();
-  commmunication->fan = fan;
-  commmunication->leds = leds;
-  solenoid->leds = leds;
-  solenoid->communication = commmunication;
-  solenoid->motor = motor;
-  //while (!packetUpdate()) {delay(10);}
+  communication.fan = &fan;
+  communication.leds = &leds;
+  communication.motor = &motor;
+  communication.solenoid = &solenoid;
 };
 
 void loop() {
-  commmunication->packetUpdate();
-  fan->setPwmSpeed(map(commmunication->internalTemperture, 72, 120, 0, 100));
-  // lockProcessor(isLocked);
-  // ledProcessor();
-  // livelinessProbe();
+
 };

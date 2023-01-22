@@ -1,3 +1,4 @@
+#pragma once
 // Motor Controller Pins
 #define MOTOR1_1 20
 #define MOTOR1_2 21
@@ -44,6 +45,7 @@
 #define LED_PIN 19 // The pin that the LED control header is in
 #define NUM_LEDS 288
 
+// Addressable LEDs
 #define WEST_LED_START 0
 #define WEST_LED_STOP 57
 #define NORTH_LED_START 58
@@ -54,6 +56,13 @@
 #define SOUTH_LED_STOP 228
 #define TOP_LED_START 229
 #define TOP_LED_STOP 288
+
+// Light Colors
+#define WEST_LIGHT_COLOR 18
+#define EAST_LIGHT_COLOR 21
+#define NORTH_LIGHT_COLOR 24
+#define SOUTH_LIGHT_COLOR 27
+#define TOP_LIGHT_COLOR 30
 
 // Solenoid
 #define SOLENOID_PIN 18
