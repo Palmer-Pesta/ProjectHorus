@@ -32,5 +32,6 @@ void setup() {
 
 void loop() {
   communication.packetUpdate();
+  //communication.livelinessProbe();
   leds.updateLEDs();
 };

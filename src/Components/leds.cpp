@@ -16,7 +16,7 @@ CYAN: CRGB(0,100,100);
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Manual Action Class
 void ManualLedAction::setRed(int redValue) {
-  red = redValue;
+  red = (int) (redValue * (254/255.0));
 }
 
 int ManualLedAction::getRed() {
@@ -24,7 +24,7 @@ int ManualLedAction::getRed() {
 }
 
 void ManualLedAction::setGreen(int greenValue) {
-  green = greenValue;
+  green = (int) (greenValue * (254/255.0));
 }
 
 int ManualLedAction::getGreen() {
@@ -32,7 +32,7 @@ int ManualLedAction::getGreen() {
 }
 
 void ManualLedAction::setBlue(int blueValue) {
-  blue = blueValue;
+  blue = (int) (blueValue * (254/255.0));
 }
 
 int ManualLedAction::getBlue() {
@@ -186,10 +186,11 @@ void HorusLeds::turnOffTop() {
 
 // Update LED Color and Brightness
 void HorusLeds::setWest() {
-  if (manualWestLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+  if (manualWestLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
     for (int i = WEST_LED_START; i<=WEST_LED_STOP; i++) {
       if (manualWestLeds.getIsOn()) {
-        rgb_to_hsv(manualWestLeds.getRed(), manualWestLeds.getGreen(), manualWestLeds.getBlue(), manualWestLeds.getBrightness(), i);
+        // rgb_to_hsv(manualWestLeds.getRed(), manualWestLeds.getGreen(), manualWestLeds.getBlue(), manualWestLeds.getBrightness(), i);
+        leds[i] = CRGB(manualWestLeds.getRed(), manualWestLeds.getGreen(), manualWestLeds.getBlue());
       }
       else {
         turnOffWest();
@@ -199,7 +200,8 @@ void HorusLeds::setWest() {
   else {
     if (autoWestLeds.getIsOn()) {
       for (int i = WEST_LED_START; i<=WEST_LED_STOP; i++) {
-        rgb_to_hsv(autoWestLeds.getRed(), autoWestLeds.getGreen(), autoWestLeds.getBlue(), autoWestLeds.getBrightness(), i);
+        // rgb_to_hsv(autoWestLeds.getRed(), autoWestLeds.getGreen(), autoWestLeds.getBlue(), autoWestLeds.getBrightness(), i);
+        leds[i] = CRGB(autoWestLeds.getRed(), autoWestLeds.getGreen(), autoWestLeds.getBlue());
       }
     }
     else {
@@ -209,10 +211,11 @@ void HorusLeds::setWest() {
 }
 
 void HorusLeds::setEast() {
-  if (manualEastLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+  if (manualEastLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
     if (manualEastLeds.getIsOn()) {
       for (int i = EAST_LED_START; i<=EAST_LED_STOP; i++) {
-        rgb_to_hsv(manualEastLeds.getRed(), manualEastLeds.getGreen(), manualEastLeds.getBlue(), manualEastLeds.getBrightness(), i);
+        // rgb_to_hsv(manualEastLeds.getRed(), manualEastLeds.getGreen(), manualEastLeds.getBlue(), manualEastLeds.getBrightness(), i);
+        leds[i] = CRGB(manualEastLeds.getRed(), manualEastLeds.getGreen(), manualEastLeds.getBlue());
       }
     }
     else {
@@ -222,7 +225,8 @@ void HorusLeds::setEast() {
   else {
     if (autoEastLeds.getIsOn()) {
       for (int i = EAST_LED_START; i<=EAST_LED_STOP; i++) {
-        rgb_to_hsv(autoEastLeds.getRed(), autoEastLeds.getGreen(), autoEastLeds.getBlue(), autoEastLeds.getBrightness(), i);
+        // rgb_to_hsv(autoEastLeds.getRed(), autoEastLeds.getGreen(), autoEastLeds.getBlue(), autoEastLeds.getBrightness(), i);
+        leds[i] = CRGB(autoEastLeds.getRed(), autoEastLeds.getGreen(), autoEastLeds.getBlue());
       }
     }
     else {
@@ -232,10 +236,11 @@ void HorusLeds::setEast() {
 }
 
 void HorusLeds::setNorth() {
-  if (manualNorthLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
-    if (manualEastLeds.getIsOn()) {
+  if (manualNorthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
+    if (manualNorthLeds.getIsOn()) {
       for (int i = NORTH_LED_START; i<=NORTH_LED_STOP; i++) {
-        rgb_to_hsv(manualNorthLeds.getRed(), manualNorthLeds.getGreen(), manualNorthLeds.getBlue(), manualNorthLeds.getBrightness(), i);
+        //rgb_to_hsv(autoEastLeds.getRed(), autoEastLeds.getGreen(), autoEastLeds.getBlue(), manualNorthLeds.getBrightness(), i);
+        leds[i] = CRGB(manualNorthLeds.getRed(), manualNorthLeds.getGreen(), manualNorthLeds.getBlue());
       }
     }
     else {
@@ -245,7 +250,8 @@ void HorusLeds::setNorth() {
   else {
     if (autoNorthLeds.getIsOn()) {
       for (int i = NORTH_LED_START; i<=NORTH_LED_STOP; i++) {
-        rgb_to_hsv(autoNorthLeds.getRed(), autoNorthLeds.getGreen(), autoNorthLeds.getBlue(), autoNorthLeds.getBrightness(), i);
+        // rgb_to_hsv(autoNorthLeds.getRed(), autoNorthLeds.getGreen(), autoNorthLeds.getBlue(), autoNorthLeds.getBrightness(), i);
+        leds[i] = CRGB(autoNorthLeds.getRed(), autoNorthLeds.getGreen(), autoNorthLeds.getBlue());
       }
     }
     else {
@@ -255,10 +261,11 @@ void HorusLeds::setNorth() {
 }
 
 void HorusLeds::setSouth() {
-  if (manualSouthLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+  if (manualSouthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
     if (manualSouthLeds.getIsOn()) {
       for (int i = SOUTH_LED_START; i<=SOUTH_LED_STOP; i++) {
-        rgb_to_hsv(manualSouthLeds.getRed(), manualSouthLeds.getGreen(), manualSouthLeds.getBlue(), manualSouthLeds.getBrightness(), i);
+        // rgb_to_hsv(manualSouthLeds.getRed(), manualSouthLeds.getGreen(), manualSouthLeds.getBlue(), manualSouthLeds.getBrightness(), i);
+        leds[i] = CRGB(manualSouthLeds.getRed(), manualSouthLeds.getGreen(), manualSouthLeds.getBlue());
       }
     }
     else {
@@ -268,7 +275,8 @@ void HorusLeds::setSouth() {
   else {
     if (autoSouthLeds.getIsOn()) {
       for (int i = SOUTH_LED_START; i<=SOUTH_LED_STOP; i++) {
-        rgb_to_hsv(autoSouthLeds.getRed(), autoSouthLeds.getGreen(), autoSouthLeds.getBlue(), autoSouthLeds.getBrightness(), i);
+        // rgb_to_hsv(autoSouthLeds.getRed(), autoSouthLeds.getGreen(), autoSouthLeds.getBlue(), autoSouthLeds.getBrightness(), i);
+        leds[i] = CRGB(autoSouthLeds.getRed(), autoSouthLeds.getGreen(), autoSouthLeds.getBlue());
       }
     }
     else {
@@ -278,10 +286,11 @@ void HorusLeds::setSouth() {
 }
 
 void HorusLeds::setTop() {
-  if (manualTopLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+  if (manualTopLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
     if (manualTopLeds.getIsOn()) {
       for (int i = TOP_LED_START; i<=TOP_LED_STOP; i++) {
-        rgb_to_hsv(manualTopLeds.getRed(), manualTopLeds.getGreen(), manualTopLeds.getBlue(), manualTopLeds.getBrightness(), i);
+        // rgb_to_hsv(manualTopLeds.getRed(), manualTopLeds.getGreen(), manualTopLeds.getBlue(), manualTopLeds.getBrightness(), i);
+        leds[i] = CRGB(manualTopLeds.getRed(), manualTopLeds.getGreen(), manualTopLeds.getBlue());
       }
     }
     else {
@@ -291,7 +300,8 @@ void HorusLeds::setTop() {
   else {
     if (autoTopLeds.getIsOn()) {
       for (int i = TOP_LED_START; i<=TOP_LED_STOP; i++) {
-        rgb_to_hsv(autoTopLeds.getRed(), autoTopLeds.getGreen(), autoTopLeds.getBlue(), autoTopLeds.getBrightness(), i);
+        //rgb_to_hsv(autoTopLeds.getRed(), autoTopLeds.getGreen(), autoTopLeds.getBlue(), autoTopLeds.getBrightness(), i);
+        leds[i] = CRGB(autoTopLeds.getRed(), autoTopLeds.getGreen(), autoTopLeds.getBlue());
       }
     }
     else {

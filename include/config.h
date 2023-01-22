@@ -45,7 +45,7 @@
 #define LED_PIN 19 // The pin that the LED control header is in
 #define LED_MANUAL_TIMEOUT 300000
 #define NUM_LEDS 288
-#define LED_DEFAULT_BRIGHTNESS 100
+#define LED_DEFAULT_BRIGHTNESS 10
 
 // Addressable LEDs
 #define WEST_LED_START 0

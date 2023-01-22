@@ -111,35 +111,41 @@ bool HorusCommunication::packetUpdate() {
             case WEST_LIGHT:
                 leds->manualWestLeds.setIsOn(esp32_data[1]);
                 leds->manualWestLeds.setTimestamp(millis());
+                leds->setWest();
                 // TODO
                 //leds->manualWestLeds.setBrightness(esp32_data[1]);
                 break;
             case EAST_LIGHT:
-                leds->manualWestLeds.setIsOn(esp32_data[1]);
-                leds->manualWestLeds.setTimestamp(millis());
+                leds->manualEastLeds.setIsOn(esp32_data[1]);
+                leds->manualEastLeds.setTimestamp(millis());
+                leds->setEast();
                 // TODO
                 //leds->manualWestLeds.setBrightness(esp32_data[1]);
                 break;
             case NORTH_LIGHT:
-                leds->manualWestLeds.setIsOn(esp32_data[1]);
-                leds->manualWestLeds.setTimestamp(millis());
+                leds->manualNorthLeds.setIsOn(esp32_data[1]);
+                leds->manualNorthLeds.setTimestamp(millis());
+                leds->setNorth();
                 // TODO
                 //leds->manualWestLeds.setBrightness(esp32_data[1]);
                 break;
             case SOUTH_LIGHT:
-                leds->manualWestLeds.setIsOn(esp32_data[1]);
-                leds->manualWestLeds.setTimestamp(millis());
+                leds->manualSouthLeds.setIsOn(esp32_data[1]);
+                leds->manualSouthLeds.setTimestamp(millis());
+                leds->setSouth();
                 // TODO
                 //leds->manualWestLeds.setBrightness(esp32_data[1]);
                 break;
             case TOP_LIGHT:
-                leds->manualWestLeds.setIsOn(esp32_data[1]);
-                leds->manualWestLeds.setTimestamp(millis());
+                leds->manualTopLeds.setIsOn(esp32_data[1]);
+                leds->manualTopLeds.setTimestamp(millis());
+                leds->setTop();
                 // TODO
                 //leds->manualWestLeds.setBrightness(esp32_data[1]);
                 break;
         }
         packetReceived = true;
+        leds->updateLEDs();
     }
     return packetReceived;
 }
@@ -185,7 +191,7 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= west_time_liveliness) {
         uint8_t buf[] = {WEST_LIGHT_COLOR, 0, 0, 0};
             
-        if (leds->manualWestLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+        if (leds->manualWestLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualWestLeds.getRed();
             buf[2] = leds->manualWestLeds.getGreen();
             buf[3] = leds->manualWestLeds.getBlue();
@@ -202,7 +208,7 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= east_time_liveliness) {
         uint8_t buf[] = {EAST_LIGHT_COLOR, 0, 0, 0};
             
-        if (leds->manualEastLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+        if (leds->manualEastLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualEastLeds.getRed();
             buf[2] = leds->manualEastLeds.getGreen();
             buf[3] = leds->manualEastLeds.getBlue();
@@ -219,7 +225,7 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= north_time_liveliness) {
         uint8_t buf[] = {NORTH_LIGHT_COLOR, 0, 0, 0};
             
-        if (leds->manualNorthLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+        if (leds->manualNorthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualNorthLeds.getRed();
             buf[2] = leds->manualNorthLeds.getGreen();
             buf[3] = leds->manualNorthLeds.getBlue();
@@ -236,7 +242,7 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= south_time_liveliness) {
         uint8_t buf[] = {SOUTH_LIGHT_COLOR, 0, 0, 0};
             
-        if (leds->manualSouthLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+        if (leds->manualSouthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualSouthLeds.getRed();
             buf[2] = leds->manualSouthLeds.getGreen();
             buf[3] = leds->manualSouthLeds.getBlue();
@@ -253,7 +259,7 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= top_time_liveliness) {
         uint8_t buf[] = {TOP_LIGHT_COLOR, 0, 0, 0};
             
-        if (leds->manualTopLeds.getTimestamp() >= millis() + LED_MANUAL_TIMEOUT) {
+        if (leds->manualTopLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualTopLeds.getRed();
             buf[2] = leds->manualTopLeds.getGreen();
             buf[3] = leds->manualTopLeds.getBlue();
