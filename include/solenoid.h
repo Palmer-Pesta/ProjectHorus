@@ -1,14 +1,13 @@
 #pragma once
 #include "config.h"
 
-// #ifndef HorusSolenoid_H
-// #define HorusSolenoid_H
 class HorusSolenoid {      
   private:
     unsigned long lastUnlocked;
+    
     bool isLocked;
-  public:
 
+  public:
     void solenoidSetup();
 
     void lockPanel();
@@ -16,5 +15,6 @@ class HorusSolenoid {
     void unlockPanel();
 
     void lockProcessor(bool isLocked);
+
+    bool getState();
 };
-// #endif

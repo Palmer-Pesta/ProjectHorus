@@ -4,14 +4,105 @@
 // Internal Imports
 #include "config.h"
 
+class ManualLedAction {
+  private:
+    int red = 255;
+
+    int blue = 255;
+
+    int green = 255;
+
+    int brightness = LED_DEFAULT_BRIGHTNESS;
+
+    bool isOn = false;
+
+    unsigned long timestamp = 0;
+
+  public:
+    void setRed(int redValue);
+
+    int getRed();
+
+    void setGreen(int greenValue);
+
+    int getGreen();
+
+    void setBlue(int blueValue);
+
+    int getBlue();
+
+    void setBrightness(int brightnessValue);
+
+    int getBrightness();
+
+    void setIsOn(bool state);
+
+    bool getIsOn();
+
+    void setTimestamp(unsigned long setTime);
+
+    unsigned long getTimestamp();
+};
+
+class AutomaticLed {
+  private:
+    int red = 255;
+
+    int blue = 255;
+
+    int green = 255;
+
+    int brightness = LED_DEFAULT_BRIGHTNESS;
+
+    bool isOn = false;
+
+  public:
+    void setRed(int redValue);
+
+    int getRed();
+
+    void setGreen(int greenValue);
+
+    int getGreen();
+
+    void setBlue(int blueValue);
+
+    int getBlue();
+
+    void setBrightness(int brightnessValue);
+
+    int getBrightness();
+
+    void setIsOn(bool state);
+
+    bool getIsOn();
+};
+
 class HorusLeds {      
   private:
     CRGB leds[NUM_LEDS]; // The array of LED colors
+
   public:        
-      
+    // Manual Actions LED Commands
+    ManualLedAction manualWestLeds;
+    ManualLedAction manualEastLeds;
+    ManualLedAction manualNorthLeds;
+    ManualLedAction manualSouthLeds;
+    ManualLedAction manualTopLeds;
+
+    // Automatic Actions LED Commands
+    AutomaticLed autoWestLeds;
+    AutomaticLed autoEastLeds;
+    AutomaticLed autoNorthLeds;
+    AutomaticLed autoSouthLeds;
+    AutomaticLed autoTopLeds;
+
     void ledSetup();
 
-    // Clear LEDS
+    void updateLEDs();
+
+    void rgb_to_hsv(double r, double g, double b, int brightness, int ledNumber);
+
     bool clearLEDs();
 
     void turnOnWest();
@@ -34,14 +125,14 @@ class HorusLeds {
 
     void turnOffTop();
 
-    // Color
-    void westColor(int red, int green, int blue);
+    // Update LEDs
+    void setWest();
 
-    void eastColor(int red, int green, int blue);
+    void setEast();
 
-    void northColor(int red, int green, int blue);
+    void setNorth();
 
-    void southColor(int red, int green, int blue);
+    void setSouth();
 
-    void topColor(int red, int green, int blue);
+    void setTop();
 };

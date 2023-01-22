@@ -22,8 +22,15 @@ void setup() {
   communication.leds = &leds;
   communication.motor = &motor;
   communication.solenoid = &solenoid;
+
+  communication.livelinessSetup();
+  motor.motorSetup();
+  fan.fanSetup();
+  leds.ledSetup();
+  solenoid.solenoidSetup();
 };
 
 void loop() {
-
+  communication.packetUpdate();
+  leds.updateLEDs();
 };

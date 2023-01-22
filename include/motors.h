@@ -11,6 +11,7 @@ class HorusMotor {
     Stepper* stepperN = new Stepper(STEPS_PER_REVOLUTION, MOTOR3_1, MOTOR3_2, MOTOR3_3, MOTOR3_4); // Motor 3
     Stepper* stepperS = new Stepper(STEPS_PER_REVOLUTION, MOTOR4_1, MOTOR4_2, MOTOR4_3, MOTOR4_4); // Motor 4
     Stepper* stepperT = new Stepper(STEPS_PER_REVOLUTION, MOTOR5_1, MOTOR5_2, MOTOR5_3, MOTOR5_4); // Motor 5
+
   public:
     void motorSetup();
 

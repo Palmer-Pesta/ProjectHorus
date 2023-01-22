@@ -24,3 +24,7 @@ void HorusSolenoid::lockProcessor(bool isLocked) {
     unlockPanel();
   }
 }
+
+bool HorusSolenoid::getState() {
+  return isLocked;
+}

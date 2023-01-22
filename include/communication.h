@@ -11,21 +11,16 @@ class HorusCommunication {
     unsigned long lastUnlocked;
     char esp32_data[4];
     // Liveliness Probe
-    unsigned long power_time;
-    unsigned long lock_time;
-    unsigned long west_time;
-    unsigned long east_time;
-    unsigned long south_time;
-    unsigned long north_time;
-    unsigned long top_time;
-    unsigned long fan_time;
-    unsigned long current_time;
-  public:
-    HorusFan* fan;
-    HorusLeds* leds;
-    HorusMotor* motor;
-    HorusSolenoid* solenoid;
-    
+    unsigned long power_time_liveliness;
+    unsigned long lock_time_liveliness;
+    unsigned long west_time_liveliness;
+    unsigned long east_time_liveliness;
+    unsigned long south_time_liveliness;
+    unsigned long north_time_liveliness;
+    unsigned long top_time_liveliness;
+    unsigned long fan_time_liveliness;
+    unsigned long current_time_liveliness;
+
     int internalTemperture;
     bool isLocked = true;
     bool isHome = false;
@@ -42,17 +37,12 @@ class HorusCommunication {
     bool computer = false;
     bool in_bed = false;
     bool power = true;
-
-    // Lights
-    int brightness;
-    int red;
-    int green;
-    int blue;
-    bool west_light = false;
-    bool east_light = false;
-    bool north_light = false;
-    bool south_light = false;
-    bool top_light = false;
+    
+  public:
+    HorusFan* fan;
+    HorusLeds* leds;
+    HorusMotor* motor;
+    HorusSolenoid* solenoid;
     
     bool packetUpdate();
 
