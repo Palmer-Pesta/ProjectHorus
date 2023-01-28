@@ -8,7 +8,6 @@
 #include "solenoid.h"
 #include "config.h"
 
-
 // Create Class Instantances
 HorusCommunication communication;
 HorusFan fan;
@@ -18,6 +17,7 @@ HorusSolenoid solenoid;
 
 void setup() {
   Serial.begin(SERIAL_BAUDRATE);
+  while (!Serial) {delay(10);}
   communication.fan = &fan;
   communication.leds = &leds;
   communication.motor = &motor;
@@ -31,7 +31,12 @@ void setup() {
 };
 
 void loop() {
-  communication.packetUpdate();
   //communication.livelinessProbe();
-  leds.updateLEDs();
+  if((millis() % 500) == 0) {
+    leds.updateLEDs();
+  }
 };
+
+void serialEvent() {
+  communication.packetUpdate();
+}

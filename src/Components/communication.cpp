@@ -12,8 +12,18 @@
 bool HorusCommunication::packetUpdate() {
     bool packetReceived = false;
 
-    while (Serial.available() > 0) { // Check for a packet update
-        Serial.readBytes(esp32_data, 4);
+    while (Serial.available() >= 5) { // Check for a packet update
+        Serial.readBytesUntil(32, esp32_data, 5);
+        Serial.print(esp32_data[0], DEC);
+        Serial.print('-');
+        Serial.print(esp32_data[1], DEC);
+        Serial.print('-');
+        Serial.print(esp32_data[2], DEC);
+        Serial.print('-');
+        Serial.print(esp32_data[3], DEC);
+        Serial.print('-');
+        Serial.println(esp32_data[4], DEC);
+        Serial.println(Serial.available());
         switch(esp32_data[0]) {
             case TEMPERATURE:
                 internalTemperture = esp32_data[1];
@@ -166,30 +176,30 @@ void HorusCommunication::livelinessProbe() {
     current_time_liveliness = millis();
     if (current_time_liveliness >= power_time_liveliness) {
         if (power) {
-            uint8_t buf[] = {POWER, 1, 0, 0};
-            Serial.write(buf, 4);
+            uint8_t buf[] = {POWER, 1, 0, 0, 32};
+            Serial.write(buf, 5);
         }
         else {
-            uint8_t buf[] = {POWER, 0, 0, 0};
-            Serial.write(buf, 4);
+            uint8_t buf[] = {POWER, 0, 0, 0, 32};
+            Serial.write(buf, 5);
         }
         power_time_liveliness = millis() + probe_interval;
     }
 
     if (current_time_liveliness >= lock_time_liveliness) {
         if (digitalRead(SOLENOID_PIN)) {
-            uint8_t buf[] = {LOCK, 1, 0, 0};
-            Serial.write(buf, 4);
+            uint8_t buf[] = {LOCK, 1, 0, 0, 32};
+            Serial.write(buf, 5);
         }
         else {
-            uint8_t buf[] = {LOCK, 0, 0, 0};
-            Serial.write(buf, 4);
+            uint8_t buf[] = {LOCK, 0, 0, 0, 32};
+            Serial.write(buf, 5);
         }
         lock_time_liveliness = millis() + probe_interval;
     }
 
     if (current_time_liveliness >= west_time_liveliness) {
-        uint8_t buf[] = {WEST_LIGHT_COLOR, 0, 0, 0};
+        uint8_t buf[] = {WEST_LIGHT_COLOR, 0, 0, 0, 32};
             
         if (leds->manualWestLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualWestLeds.getRed();
@@ -201,12 +211,12 @@ void HorusCommunication::livelinessProbe() {
             buf[2] = leds->autoWestLeds.getGreen();
             buf[3] = leds->autoWestLeds.getBlue();
         }
-        Serial.write(buf, 4);
+        Serial.write(buf, 5);
         west_time_liveliness = millis() + probe_interval;
     }
 
     if (current_time_liveliness >= east_time_liveliness) {
-        uint8_t buf[] = {EAST_LIGHT_COLOR, 0, 0, 0};
+        uint8_t buf[] = {EAST_LIGHT_COLOR, 0, 0, 0, 32};
             
         if (leds->manualEastLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualEastLeds.getRed();
@@ -218,12 +228,12 @@ void HorusCommunication::livelinessProbe() {
             buf[2] = leds->autoEastLeds.getGreen();
             buf[3] = leds->autoEastLeds.getBlue();
         }
-        Serial.write(buf, 4);
+        Serial.write(buf, 5);
         east_time_liveliness = millis() + probe_interval;
     }
 
     if (current_time_liveliness >= north_time_liveliness) {
-        uint8_t buf[] = {NORTH_LIGHT_COLOR, 0, 0, 0};
+        uint8_t buf[] = {NORTH_LIGHT_COLOR, 0, 0, 0, 32};
             
         if (leds->manualNorthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualNorthLeds.getRed();
@@ -235,12 +245,12 @@ void HorusCommunication::livelinessProbe() {
             buf[2] = leds->autoNorthLeds.getGreen();
             buf[3] = leds->autoNorthLeds.getBlue();
         }
-        Serial.write(buf, 4);
+        Serial.write(buf, 5);
         north_time_liveliness = millis() + probe_interval;
     }
 
     if (current_time_liveliness >= south_time_liveliness) {
-        uint8_t buf[] = {SOUTH_LIGHT_COLOR, 0, 0, 0};
+        uint8_t buf[] = {SOUTH_LIGHT_COLOR, 0, 0, 0, 32};
             
         if (leds->manualSouthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualSouthLeds.getRed();
@@ -252,12 +262,12 @@ void HorusCommunication::livelinessProbe() {
             buf[2] = leds->autoSouthLeds.getGreen();
             buf[3] = leds->autoSouthLeds.getBlue();
         }
-        Serial.write(buf, 4);
+        Serial.write(buf, 5);
         south_time_liveliness = millis() + probe_interval;
     }
 
     if (current_time_liveliness >= top_time_liveliness) {
-        uint8_t buf[] = {TOP_LIGHT_COLOR, 0, 0, 0};
+        uint8_t buf[] = {TOP_LIGHT_COLOR, 0, 0, 0, 32};
             
         if (leds->manualTopLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualTopLeds.getRed();
@@ -269,13 +279,14 @@ void HorusCommunication::livelinessProbe() {
             buf[2] = leds->autoTopLeds.getGreen();
             buf[3] = leds->autoTopLeds.getBlue();
         }
-        Serial.write(buf, 4);
+        Serial.write(buf, 5);
         top_time_liveliness = millis() + probe_interval;
     }
 
     if (current_time_liveliness >= fan_time_liveliness) {
-        uint8_t buf[] = {FAN, (uint8_t) fan->getPwmSpeed(), 0, 0};
-        Serial.write(buf, 4);
+        uint8_t buf[] = {FAN, (uint8_t) fan->getPwmSpeed(), 0, 0, 32};
+        Serial.write(buf, 5);
         fan_time_liveliness = millis() + probe_interval;
     }
+    Serial.flush();
 }

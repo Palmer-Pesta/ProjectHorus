@@ -1,4 +1,8 @@
 #pragma once
+
+//Debug 
+#define DEBUG 1
+
 // Motor Controller Pins
 #define MOTOR1_1 20
 #define MOTOR1_2 21
