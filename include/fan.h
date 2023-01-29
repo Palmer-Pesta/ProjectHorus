@@ -8,7 +8,7 @@ class HorusFan {
     
   public:        
     void fanSetup();
-
+    
     void setPwmSpeed(int power);
 
     int getPwmSpeed();

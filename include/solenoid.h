@@ -5,7 +5,7 @@ class HorusSolenoid {
   private:
     unsigned long lastUnlocked;
     
-    bool isLocked;
+    bool isLocked = true;
 
   public:
     void solenoidSetup();

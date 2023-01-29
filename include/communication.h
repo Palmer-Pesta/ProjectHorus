@@ -20,6 +20,12 @@ class HorusCommunication {
     unsigned long top_time_liveliness;
     unsigned long fan_time_liveliness;
     unsigned long current_time_liveliness;
+    
+  public:
+    HorusFan* fan;
+    HorusLeds* leds;
+    HorusMotor* motor;
+    HorusSolenoid* solenoid;
 
     int internalTemperture;
     bool isLocked = true;
@@ -37,12 +43,6 @@ class HorusCommunication {
     bool computer = false;
     bool in_bed = false;
     bool power = true;
-    
-  public:
-    HorusFan* fan;
-    HorusLeds* leds;
-    HorusMotor* motor;
-    HorusSolenoid* solenoid;
     
     bool packetUpdate();
 

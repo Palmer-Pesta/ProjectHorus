@@ -32,9 +32,7 @@ void setup() {
 
 void loop() {
   //communication.livelinessProbe();
-  if((millis() % 500) == 0) {
-    leds.updateLEDs();
-  }
+  solenoid.lockProcessor(communication.isLocked);
 };
 
 void serialEvent() {

@@ -13,17 +13,20 @@ bool HorusCommunication::packetUpdate() {
     bool packetReceived = false;
 
     while (Serial.available() >= 5) { // Check for a packet update
-        Serial.readBytesUntil(32, esp32_data, 5);
-        Serial.print(esp32_data[0], DEC);
-        Serial.print('-');
-        Serial.print(esp32_data[1], DEC);
-        Serial.print('-');
-        Serial.print(esp32_data[2], DEC);
-        Serial.print('-');
-        Serial.print(esp32_data[3], DEC);
-        Serial.print('-');
-        Serial.println(esp32_data[4], DEC);
         Serial.println(Serial.available());
+        Serial.readBytesUntil(32, esp32_data, 5);
+        if (DEBUG == 1) {
+            Serial.print(esp32_data[0], HEX);
+            Serial.print('-');
+            Serial.print(esp32_data[1], HEX);
+            Serial.print('-');
+            Serial.print(esp32_data[2], HEX);
+            Serial.print('-');
+            Serial.print(esp32_data[3], HEX);
+            Serial.print('-');
+            Serial.println(esp32_data[4], HEX);
+        }
+
         switch(esp32_data[0]) {
             case TEMPERATURE:
                 internalTemperture = esp32_data[1];
@@ -153,9 +156,10 @@ bool HorusCommunication::packetUpdate() {
                 // TODO
                 //leds->manualWestLeds.setBrightness(esp32_data[1]);
                 break;
+            default:
+                break;
         }
         packetReceived = true;
-        leds->updateLEDs();
     }
     return packetReceived;
 }

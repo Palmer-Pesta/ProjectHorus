@@ -16,7 +16,7 @@ CYAN: CRGB(0,100,100);
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Manual Action Class
 void ManualLedAction::setRed(int redValue) {
-  red = (int) (redValue * (254/255.0));
+  red = (int) (redValue);
 }
 
 int ManualLedAction::getRed() {
@@ -24,7 +24,7 @@ int ManualLedAction::getRed() {
 }
 
 void ManualLedAction::setGreen(int greenValue) {
-  green = (int) (greenValue * (254/255.0));
+  green = (int) (greenValue);
 }
 
 int ManualLedAction::getGreen() {
@@ -32,7 +32,7 @@ int ManualLedAction::getGreen() {
 }
 
 void ManualLedAction::setBlue(int blueValue) {
-  blue = (int) (blueValue * (254/255.0));
+  blue = (int) (blueValue);
 }
 
 int ManualLedAction::getBlue() {
@@ -109,6 +109,7 @@ bool AutomaticLed::getIsOn() {
 // LEDs Class
 void HorusLeds::ledSetup() {
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS); // Setup LEDs
+  FastLED.setBrightness(LED_DEFAULT_BRIGHTNESS);
   clearLEDs();
 }
 
@@ -208,6 +209,7 @@ void HorusLeds::setWest() {
       turnOffWest();
     }
   }
+  updateLEDs();
 }
 
 void HorusLeds::setEast() {
@@ -233,6 +235,7 @@ void HorusLeds::setEast() {
       turnOffEast();
     }
   }
+  updateLEDs();
 }
 
 void HorusLeds::setNorth() {
@@ -258,6 +261,7 @@ void HorusLeds::setNorth() {
       turnOffNorth();
     }
   }
+  updateLEDs();
 }
 
 void HorusLeds::setSouth() {
@@ -283,6 +287,7 @@ void HorusLeds::setSouth() {
       turnOffSouth();
     }
   }
+  updateLEDs();
 }
 
 void HorusLeds::setTop() {
@@ -308,6 +313,7 @@ void HorusLeds::setTop() {
       turnOffTop();
     }
   }
+  updateLEDs();
 }
 
 void HorusLeds::rgb_to_hsv(double r, double g, double b, int brightness, int ledNumber) {
