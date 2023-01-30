@@ -15,6 +15,10 @@ HorusLeds leds;
 HorusMotor motor;
 HorusSolenoid solenoid;
 
+void serialEvent() {
+  communication.packetUpdate();
+}
+
 void setup() {
   Serial.begin(SERIAL_BAUDRATE);
   while (!Serial) {delay(10);}
@@ -28,13 +32,11 @@ void setup() {
   fan.fanSetup();
   leds.ledSetup();
   solenoid.solenoidSetup();
+  leds.updateLEDs();
 };
 
 void loop() {
-  //communication.livelinessProbe();
+  communication.livelinessProbe();
   solenoid.lockProcessor(communication.isLocked);
+  //motor.topPillarPeak();
 };
-
-void serialEvent() {
-  communication.packetUpdate();
-}

@@ -1,7 +1,7 @@
 #pragma once
 
 //Debug 
-#define DEBUG 1
+#define DEBUG 0
 
 // Motor Controller Pins
 #define MOTOR1_1 20
@@ -81,7 +81,7 @@
 #define SERIAL_BAUDRATE 9600 
 
 // Probe Interval
-#define probe_interval 2250
+#define probe_interval 10000
 
 // Packet Headers
 #define TEMPERATURE 0

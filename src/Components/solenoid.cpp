@@ -10,10 +10,12 @@ void HorusSolenoid::solenoidSetup() {
 
 void HorusSolenoid::lockPanel() {
   digitalWrite(SOLENOID_PIN, LOW);
+  isLocked = true;
 }
 
 void HorusSolenoid::unlockPanel() {
   digitalWrite(SOLENOID_PIN, HIGH);
+  isLocked = false;
 }
 
 void HorusSolenoid::lockProcessor(bool isLocked) {

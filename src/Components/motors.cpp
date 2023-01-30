@@ -27,6 +27,18 @@ bool HorusMotor::pillarsDecend() {
   return true;
 }
 
+void HorusMotor::westPillarPeak() {
+  while (digitalRead(WEST_LIMIT_SWITCH_UPPER)) {
+    stepperW->step(1); // Make negative to go the counterclockwise
+  }
+}
+
+void HorusMotor::westPillarTrough() {
+  while (digitalRead(WEST_LIMIT_SWITCH_LOWER)) {
+    stepperW->step(-1); // Make negative to go the counterclockwise
+  }
+}
+
 void HorusMotor::eastPillarPeak() {
   while (digitalRead(EAST_LIMIT_SWITCH_UPPER)) {
     stepperE->step(1); // Make negative to go the counterclockwise
@@ -35,7 +47,7 @@ void HorusMotor::eastPillarPeak() {
 
 void HorusMotor::eastPillarTrough() {
   while (digitalRead(EAST_LIMIT_SWITCH_LOWER)) {
-    stepperE->step(1); // Make negative to go the counterclockwise
+    stepperE->step(-1); // Make negative to go the counterclockwise
   }
 }
 
@@ -47,19 +59,7 @@ void HorusMotor::northPillarPeak() {
 
 void HorusMotor::northPillarTrough() {
   while (digitalRead(NORTH_LIMIT_SWITCH_LOWER)) {
-    stepperN->step(1); // Make negative to go the counterclockwise
-  }
-}
-
-void HorusMotor::westPillarPeak() {
-  while (digitalRead(WEST_LIMIT_SWITCH_UPPER)) {
-    stepperW->step(1); // Make negative to go the counterclockwise
-  }
-}
-
-void HorusMotor::westPillarTrough() {
-  while (digitalRead(WEST_LIMIT_SWITCH_LOWER)) {
-    stepperW->step(1); // Make negative to go the counterclockwise
+    stepperN->step(-1); // Make negative to go the counterclockwise
   }
 }
 
@@ -71,7 +71,7 @@ void HorusMotor::southPillarPeak() {
 
 void HorusMotor::southPillarTrough() {
   while (digitalRead(SOUTH_LIMIT_SWITCH_LOWER)) {
-    stepperS->step(1); // Make negative to go the counterclockwise
+    stepperS->step(-1); // Make negative to go the counterclockwise
   }
 }
 
@@ -83,6 +83,6 @@ void HorusMotor::topPillarPeak() {
 
 void HorusMotor::topPillarTrough() {
   while (digitalRead(TOP_LIMIT_SWITCH_LOWER)) {
-    stepperT->step(1); // Make negative to go the counterclockwise
+    stepperT->step(-1); // Make negative to go the counterclockwise
   }
 }

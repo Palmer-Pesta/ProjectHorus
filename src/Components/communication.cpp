@@ -13,7 +13,6 @@ bool HorusCommunication::packetUpdate() {
     bool packetReceived = false;
 
     while (Serial.available() >= 5) { // Check for a packet update
-        Serial.println(Serial.available());
         Serial.readBytesUntil(32, esp32_data, 5);
         if (DEBUG == 1) {
             Serial.print(esp32_data[0], HEX);
@@ -191,7 +190,7 @@ void HorusCommunication::livelinessProbe() {
     }
 
     if (current_time_liveliness >= lock_time_liveliness) {
-        if (digitalRead(SOLENOID_PIN)) {
+        if (solenoid->getState() == true) {
             uint8_t buf[] = {LOCK, 1, 0, 0, 32};
             Serial.write(buf, 5);
         }
@@ -205,15 +204,21 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= west_time_liveliness) {
         uint8_t buf[] = {WEST_LIGHT_COLOR, 0, 0, 0, 32};
             
-        if (leds->manualWestLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
+        if (leds->manualWestLeds.getIsOn() && leds->manualWestLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualWestLeds.getRed();
             buf[2] = leds->manualWestLeds.getGreen();
             buf[3] = leds->manualWestLeds.getBlue();
         }
-        else {
+        else if (leds->autoWestLeds.getIsOn()) {
             buf[1] = leds->autoWestLeds.getRed();
             buf[2] = leds->autoWestLeds.getGreen();
             buf[3] = leds->autoWestLeds.getBlue();
+        }
+        else {
+            buf[0] = WEST_LIGHT;
+            buf[1] = 0;
+            buf[2] = 0;
+            buf[3] = 0;
         }
         Serial.write(buf, 5);
         west_time_liveliness = millis() + probe_interval;
@@ -222,15 +227,21 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= east_time_liveliness) {
         uint8_t buf[] = {EAST_LIGHT_COLOR, 0, 0, 0, 32};
             
-        if (leds->manualEastLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
+        if (leds->manualEastLeds.getIsOn() && leds->manualEastLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualEastLeds.getRed();
             buf[2] = leds->manualEastLeds.getGreen();
             buf[3] = leds->manualEastLeds.getBlue();
         }
-        else {
+        else if (leds->autoEastLeds.getIsOn()) {
             buf[1] = leds->autoEastLeds.getRed();
             buf[2] = leds->autoEastLeds.getGreen();
             buf[3] = leds->autoEastLeds.getBlue();
+        }
+        else {
+            buf[0] = EAST_LIGHT;
+            buf[1] = 0;
+            buf[2] = 0;
+            buf[3] = 0;
         }
         Serial.write(buf, 5);
         east_time_liveliness = millis() + probe_interval;
@@ -239,15 +250,21 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= north_time_liveliness) {
         uint8_t buf[] = {NORTH_LIGHT_COLOR, 0, 0, 0, 32};
             
-        if (leds->manualNorthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
+        if (leds->manualNorthLeds.getIsOn() && leds->manualNorthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualNorthLeds.getRed();
             buf[2] = leds->manualNorthLeds.getGreen();
             buf[3] = leds->manualNorthLeds.getBlue();
         }
-        else {
+        else if (leds->autoNorthLeds.getIsOn()) {
             buf[1] = leds->autoNorthLeds.getRed();
             buf[2] = leds->autoNorthLeds.getGreen();
             buf[3] = leds->autoNorthLeds.getBlue();
+        }
+        else {
+            buf[0] = NORTH_LIGHT;
+            buf[1] = 0;
+            buf[2] = 0;
+            buf[3] = 0;
         }
         Serial.write(buf, 5);
         north_time_liveliness = millis() + probe_interval;
@@ -256,15 +273,21 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= south_time_liveliness) {
         uint8_t buf[] = {SOUTH_LIGHT_COLOR, 0, 0, 0, 32};
             
-        if (leds->manualSouthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
+        if (leds->manualSouthLeds.getIsOn() && leds->manualSouthLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualSouthLeds.getRed();
             buf[2] = leds->manualSouthLeds.getGreen();
             buf[3] = leds->manualSouthLeds.getBlue();
         }
-        else {
+        else if (leds->autoSouthLeds.getIsOn()) {
             buf[1] = leds->autoSouthLeds.getRed();
             buf[2] = leds->autoSouthLeds.getGreen();
             buf[3] = leds->autoSouthLeds.getBlue();
+        }
+        else {
+            buf[0] = SOUTH_LIGHT;
+            buf[1] = 0;
+            buf[2] = 0;
+            buf[3] = 0;
         }
         Serial.write(buf, 5);
         south_time_liveliness = millis() + probe_interval;
@@ -273,15 +296,21 @@ void HorusCommunication::livelinessProbe() {
     if (current_time_liveliness >= top_time_liveliness) {
         uint8_t buf[] = {TOP_LIGHT_COLOR, 0, 0, 0, 32};
             
-        if (leds->manualTopLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
+        if (leds->manualTopLeds.getIsOn() && leds->manualTopLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
             buf[1] = leds->manualTopLeds.getRed();
             buf[2] = leds->manualTopLeds.getGreen();
             buf[3] = leds->manualTopLeds.getBlue();
         }
-        else {
+        else if (leds->autoTopLeds.getIsOn()) {
             buf[1] = leds->autoTopLeds.getRed();
             buf[2] = leds->autoTopLeds.getGreen();
             buf[3] = leds->autoTopLeds.getBlue();
+        }
+        else {
+            buf[0] = TOP_LIGHT;
+            buf[1] = 0;
+            buf[2] = 0;
+            buf[3] = 0;
         }
         Serial.write(buf, 5);
         top_time_liveliness = millis() + probe_interval;
