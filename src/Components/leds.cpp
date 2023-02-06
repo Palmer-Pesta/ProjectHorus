@@ -125,36 +125,6 @@ bool HorusLeds::clearLEDs() {
   return true;
 }
 
-void HorusLeds::turnOnWest() {
-  for (int i = WEST_LED_START; i<=WEST_LED_STOP; i++) {
-    leds[i] = CRGB(255,255,255);
-  }
-}
-
-void HorusLeds::turnOnEast() {
-  for (int i = 0; i<NUM_LEDS; i++) {
-    leds[i] = CRGB(255,255,255);
-  }
-}
-
-void HorusLeds::turnOnNorth() {
-  for (int i = NORTH_LED_START; i<=NORTH_LED_STOP; i++) {
-    leds[i] = CRGB(255,255,255);
-  }
-}
-
-void HorusLeds::turnOnSouth() {
-  for (int i = SOUTH_LED_START; i<=SOUTH_LED_STOP; i++) {
-    leds[i] = CRGB(255,255,255);
-  }
-}
-
-void HorusLeds::turnOnTop() {
-  for (int i = TOP_LED_START; i<=TOP_LED_STOP; i++) {
-    leds[i] = CRGB(255,255,255);
-  }
-}
-
 void HorusLeds::turnOffWest() {
   for (int i = WEST_LED_START; i<=WEST_LED_STOP; i++) {
     leds[i] = CRGB(0,0,0);
