@@ -122,6 +122,11 @@ bool HorusLeds::clearLEDs() {
   for (int i = 0; i<NUM_LEDS; i++) {
     leds[i] = CRGB(0,0,0);
   }
+  autoWestLeds.setIsOn(false);
+  autoEastLeds.setIsOn(false);
+  autoNorthLeds.setIsOn(false);
+  autoSouthLeds.setIsOn(false);
+  autoTopLeds.setIsOn(false);
   return true;
 }
 
@@ -129,43 +134,48 @@ void HorusLeds::turnOffWest() {
   for (int i = WEST_LED_START; i<=WEST_LED_STOP; i++) {
     leds[i] = CRGB(0,0,0);
   }
+  autoWestLeds.setIsOn(false);
 }
 
 void HorusLeds::turnOffEast() {
   for (int i = EAST_LED_START; i<=EAST_LED_STOP; i++) {
     leds[i] = CRGB(0,0,0);
   }
+  autoEastLeds.setIsOn(false);
 }
 
 void HorusLeds::turnOffNorth() {
   for (int i = NORTH_LED_START; i<=NORTH_LED_STOP; i++) {
     leds[i] = CRGB(0,0,0);
   }
+  autoNorthLeds.setIsOn(false);
 }
 
 void HorusLeds::turnOffSouth() {
   for (int i = SOUTH_LED_START; i<=SOUTH_LED_STOP; i++) {
     leds[i] = CRGB(0,0,0);
   }
+  autoSouthLeds.setIsOn(false);
 }
 
 void HorusLeds::turnOffTop() {
   for (int i = TOP_LED_START; i<=TOP_LED_STOP; i++) {
     leds[i] = CRGB(0,0,0);
   }
+  autoTopLeds.setIsOn(false);
 }
 
 // Update LED Color and Brightness
 void HorusLeds::setWest() {
   if (manualWestLeds.getTimestamp() + LED_MANUAL_TIMEOUT >= millis()) {
-    for (int i = WEST_LED_START; i<=WEST_LED_STOP; i++) {
-      if (manualWestLeds.getIsOn()) {
+    if (manualWestLeds.getIsOn()) {
+      for (int i = WEST_LED_START; i<=WEST_LED_STOP; i++) {
         // rgb_to_hsv(manualWestLeds.getRed(), manualWestLeds.getGreen(), manualWestLeds.getBlue(), manualWestLeds.getBrightness(), i);
         leds[i] = CRGB(manualWestLeds.getRed(), manualWestLeds.getGreen(), manualWestLeds.getBlue());
       }
-      else {
-        turnOffWest();
-      }
+    }
+    else {
+      turnOffWest();
     }
   }
   else {

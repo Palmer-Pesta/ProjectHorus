@@ -16,7 +16,7 @@ class ManualLedAction {
 
     bool isOn = false;
 
-    unsigned long timestamp = 0;
+    unsigned long timestamp = millis() - LED_MANUAL_TIMEOUT;
 
   public:
     void setRed(int redValue);
@@ -104,16 +104,6 @@ class HorusLeds {
     void rgb_to_hsv(double r, double g, double b, int brightness, int ledNumber);
 
     bool clearLEDs();
-
-    void turnOnWest();
-
-    void turnOnEast();
-
-    void turnOnNorth();
-
-    void turnOnSouth();
-
-    void turnOnTop();
 
     void turnOffWest();
 
