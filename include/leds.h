@@ -1,6 +1,7 @@
 #pragma once
 // External Imports
 #include <FastLED.h>
+#include <Arduino.h>
 // Internal Imports
 #include "config.h"
 
@@ -16,7 +17,7 @@ class ManualLedAction {
 
     bool isOn = false;
 
-    unsigned long timestamp = 0;
+    unsigned long timestamp = millis() - LED_MANUAL_TIMEOUT;
 
   public:
     void setRed(int redValue);
@@ -105,16 +106,6 @@ class HorusLeds {
 
     bool clearLEDs();
 
-    void turnOnWest();
-
-    void turnOnEast();
-
-    void turnOnNorth();
-
-    void turnOnSouth();
-
-    void turnOnTop();
-
     void turnOffWest();
 
     void turnOffEast();
@@ -135,4 +126,6 @@ class HorusLeds {
     void setSouth();
 
     void setTop();
+
+    void ledProcessor(HorusCommunication* horusCommunication);
 };

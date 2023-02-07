@@ -1,5 +1,3 @@
-// External Imports
-#include <Arduino.h>
 // Internal Imports
 #include "solenoid.h"
 
