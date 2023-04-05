@@ -1,24 +1,11 @@
-// External Imports
-#include <Arduino.h>
 // Internal Imports
-#include "communication.h"
-#include "fan.h"
-#include "leds.h"
-#include "motors.h"
-#include "solenoid.h"
-#include "config.h"
-
-// Create Class Instantances
-HorusCommunication communication;
-HorusFan fan;
-HorusLeds leds;
-HorusMotor motor;
-HorusSolenoid solenoid;
+#include "Project_Horus_Main.h"
 
 void serialEvent() {
   communication.packetUpdate();
 }
 
+<<<<<<< HEAD
 void ledProcessor() {
   if (communication.kitchen_motion || communication.rice_cooker || communication.toaster || communication.air_fryer) { 
     leds.autoWestLeds.setRed(255);
@@ -83,24 +70,24 @@ void ledProcessor() {
   }
 }
 
+=======
+>>>>>>> e2fadc65a1589b95a0f02126aba38a27cb824e47
 void setup() {
+  // Begin serial communicaton
   Serial.begin(SERIAL_BAUDRATE);
+  // Wait for serial communication to be established
   while (!Serial) {delay(10);}
-  communication.fan = &fan;
-  communication.leds = &leds;
-  communication.motor = &motor;
-  communication.solenoid = &solenoid;
 
+  // Run the setup
   communication.livelinessSetup();
   motor.motorSetup();
   fan.fanSetup();
   leds.ledSetup();
   solenoid.solenoidSetup();
-  leds.updateLEDs();
 };
 
 void loop() {
   solenoid.lockProcessor(communication.isLocked);
-  ledProcessor();
+  leds.ledProcessor(&communication);
   communication.livelinessProbe();
 };

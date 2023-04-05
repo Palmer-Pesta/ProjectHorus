@@ -1,11 +1,14 @@
 #pragma once
-#include "config.h"
+// External Imports
+#include <Arduino.h>
+// Internal Imports
+#include "Config.h"
 
 class HorusSolenoid {      
   private:
     unsigned long lastUnlocked;
     
-    bool isLocked = true;
+    bool isLocked;
 
   public:
     void solenoidSetup();
@@ -14,7 +17,7 @@ class HorusSolenoid {
 
     void unlockPanel();
 
-    void lockProcessor(bool isLocked);
+    void setState(bool isLocked);
 
     bool getState();
 };

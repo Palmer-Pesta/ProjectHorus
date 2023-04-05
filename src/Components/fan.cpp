@@ -1,7 +1,5 @@
-// External Imports
-#include <Arduino.h>
 // Internal Imports
-#include "fan.h"
+#include "Fan.h"
 
            
 void HorusFan::fanSetup() {

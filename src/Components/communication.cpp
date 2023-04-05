@@ -1,12 +1,5 @@
-// External Imports
-#include <Arduino.h>
-// Internal Imports
-#include "communication.h"
-#include "fan.h"
-#include "leds.h"
-#include "motors.h"
-#include "solenoid.h"
-
+// Interal Imports
+#include "Communication.h"
 // Update the system data
 // @returns Weither an update has been preformed
 bool HorusCommunication::packetUpdate() {

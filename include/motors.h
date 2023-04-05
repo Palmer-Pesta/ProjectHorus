@@ -1,8 +1,9 @@
 #pragma once
 // External Imports
+#include <Arduino.h>
 #include <Stepper.h>
 // Internal Imports
-#include "config.h"
+#include "Config.h"
 
 class HorusMotor {
   private:

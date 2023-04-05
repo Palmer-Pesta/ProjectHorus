@@ -1,7 +1,5 @@
-// External Imports
-#include <Arduino.h>
 // Internal Imports
-#include "leds.h"
+#include "Leds.h"
 
 /*
 RED: CRGB(255,0,0);
@@ -329,4 +327,76 @@ void HorusLeds::rgb_to_hsv(double r, double g, double b, int brightness, int led
     double v = cmax * 100;
 
     leds[ledNumber] = CHSV(h, s, v * brightness);
+}
+
+/*
+ * Based on the state of the home change the LEDs 
+*/
+void HorusLeds::ledProcessor(HorusCommunication* horusCommunication) {
+  // Check the kitchen and set the west side lights
+  if (horusCommunication->kitchen_motion || horusCommunication->rice_cooker || horusCommunication->toaster || horusCommunication->air_fryer) { 
+    autoWestLeds.setRed(255);
+    autoWestLeds.setGreen(0);
+    autoWestLeds.setBlue(0);
+    autoWestLeds.setIsOn(true);
+    setWest();
+  }
+  else {
+    turnOffWest();
+  }
+
+  // Check the bedroom and set teh east side lights
+  if (horusCommunication->bedroom_motion || horusCommunication->computer) {
+    autoEastLeds.setRed(67);
+    autoEastLeds.setGreen(0);
+    autoEastLeds.setBlue(112);
+    autoEastLeds.setIsOn(true);
+    setEast();
+  }
+  else {
+    turnOffEast();
+  }
+
+  // Check the livingroom and set the north side lights
+  if (horusCommunication->tv) { // TODO: Add Livingroom Motion
+    autoNorthLeds.setRed(0);
+    autoNorthLeds.setGreen(255);
+    autoNorthLeds.setBlue(0);
+    autoNorthLeds.setIsOn(true);
+    setNorth();
+  }
+  else {
+    turnOffNorth();
+  }
+
+  // Check the Bathroom and set the southern side lights
+  if (horusCommunication->bathroom_motion) {
+    autoSouthLeds.setRed(0);
+    autoSouthLeds.setGreen(0);
+    autoSouthLeds.setBlue(255);
+    autoSouthLeds.setIsOn(true);
+    setSouth();
+  }
+  else if (horusCommunication->shower) {
+    autoSouthLeds.setRed(0);
+    autoSouthLeds.setGreen(100);
+    autoSouthLeds.setBlue(100);
+    autoSouthLeds.setIsOn(true);
+    setSouth();
+  }
+  else {
+    turnOffSouth();
+  }
+
+  // Check if I am home and set the top lights
+  if (horusCommunication->isHome && !horusCommunication->in_bed) {
+    autoTopLeds.setRed(255);
+    autoTopLeds.setGreen(255);
+    autoTopLeds.setBlue(255);
+    autoTopLeds.setIsOn(true);
+    setTop();
+  }
+  else {
+    turnOffTop();
+  }
 }

@@ -1,10 +1,12 @@
 #pragma once
+// External Imports
+#include <Arduino.h>
 // Internal Imports
-#include "fan.h"
-#include "leds.h"
-#include "motors.h"
-#include "solenoid.h"
-#include "config.h"
+#include "Fan.h"
+#include "Leds.h"
+#include "Motors.h"
+#include "Solenoid.h"
+#include "Config.h"
 
 class HorusCommunication {      
   private:
@@ -22,11 +24,6 @@ class HorusCommunication {
     unsigned long current_time_liveliness;
     
   public:
-    HorusFan* fan;
-    HorusLeds* leds;
-    HorusMotor* motor;
-    HorusSolenoid* solenoid;
-
     int internalTemperture;
     bool isLocked = true;
     bool isHome = false;
