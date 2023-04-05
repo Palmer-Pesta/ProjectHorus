@@ -2,7 +2,7 @@
 // External Imports
 #include <Arduino.h>
 // Internal Imports
-#include "config.h"
+#include "Config.h"
 
 class HorusFan {      
   private:

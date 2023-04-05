@@ -1,5 +1,5 @@
 // Internal Imports
-#include "fan.h"
+#include "Fan.h"
 
            
 void HorusFan::fanSetup() {

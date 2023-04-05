@@ -1,5 +1,9 @@
 // Internal Imports
-#include "solenoid.h"
+#include "Solenoid.h"
+
+void HorusSolenoid::HorusSolenoid() {
+  isLocked = true;
+}
 
 void HorusSolenoid::solenoidSetup() {
   pinMode(SOLENOID_PIN, OUTPUT);
@@ -16,7 +20,7 @@ void HorusSolenoid::unlockPanel() {
   isLocked = false;
 }
 
-void HorusSolenoid::lockProcessor(bool isLocked) {
+void HorusSolenoid::setState(bool isLocked) {
   if (isLocked == 1) {
     lockPanel();
   }

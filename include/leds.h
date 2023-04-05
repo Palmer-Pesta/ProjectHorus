@@ -3,7 +3,8 @@
 #include <FastLED.h>
 #include <Arduino.h>
 // Internal Imports
-#include "config.h"
+#include "Config.h"
+#include "Communication.h"
 
 class ManualLedAction {
   private:
@@ -83,6 +84,14 @@ class HorusLeds {
   private:
     CRGB leds[NUM_LEDS]; // The array of LED colors
 
+    void ledSetup();
+
+    void updateLEDs();
+
+    bool clearLEDs();
+
+    void rgb_to_hsv(double r, double g, double b, int brightness, int ledNumber);
+
   public:        
     // Manual Actions LED Commands
     ManualLedAction manualWestLeds;
@@ -97,14 +106,6 @@ class HorusLeds {
     AutomaticLed autoNorthLeds;
     AutomaticLed autoSouthLeds;
     AutomaticLed autoTopLeds;
-
-    void ledSetup();
-
-    void updateLEDs();
-
-    void rgb_to_hsv(double r, double g, double b, int brightness, int ledNumber);
-
-    bool clearLEDs();
 
     void turnOffWest();
 
@@ -127,5 +128,6 @@ class HorusLeds {
 
     void setTop();
 
+    // Processor
     void ledProcessor(HorusCommunication* horusCommunication);
 };
