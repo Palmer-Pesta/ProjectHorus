@@ -35,8 +35,25 @@ class HorusCommunication {
     bool computer = false;
     bool in_bed = false;
     bool power = true;
+
+    void motorProcessor();
+
+    void ledProcessor();
     
   public:
+    HorusCommunication();
+
+    int westColor[3];
+    int eastColor[3];
+    int northColor[3];
+    int southColor[3];
+    int topColor[3];
+
+    int westMotor;
+    int eastMotor;
+    int northMotor;
+    int southMotor;
+    int topMotor;
 
     bool packetUpdate();
 
@@ -44,5 +61,4 @@ class HorusCommunication {
 
     void livelinessProbe();
 
-    bool 
 };

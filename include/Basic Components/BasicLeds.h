@@ -13,34 +13,24 @@ class ManualLedAction {
 
     int green = 255;
 
-    int brightness = LED_DEFAULT_BRIGHTNESS;
+    unsigned long timestamp;
 
-    bool isOn = false;
+    void setBlue(int blueValue);
 
-    unsigned long timestamp = millis() - LED_MANUAL_TIMEOUT;
+    void setRed(int redValue);
+
+    void setGreen(int greenValue);
 
   public:
     ManualLedAction();
 
-    void setRed(int redValue);
-
     int getRed();
-
-    void setGreen(int greenValue);
 
     int getGreen();
 
-    void setBlue(int blueValue);
-
     int getBlue();
 
-    void setBrightness(int brightnessValue);
-
-    int getBrightness();
-
-    void setIsOn(bool state);
-
-    bool getIsOn();
+    void setColor(int red, int green, int blue);
 
     void setTimestamp(unsigned long setTime);
 
@@ -55,32 +45,22 @@ class AutomaticLed {
 
     int green = 255;
 
-    int brightness = LED_DEFAULT_BRIGHTNESS;
+    void setRed(int redValue);
 
-    bool isOn = false;
+    void setGreen(int greenValue);
+
+    void setBlue(int blueValue);
 
   public:
     AutomaticLed();
 
-    void setRed(int redValue);
-
     int getRed();
-
-    void setGreen(int greenValue);
 
     int getGreen();
 
-    void setBlue(int blueValue);
-
     int getBlue();
 
-    void setBrightness(int brightnessValue);
-
-    int getBrightness();
-
-    void setIsOn(bool state);
-
-    bool getIsOn();
+    void setColor(int red, int green, int blue);
 };
 
 class BasicLeds {      
@@ -101,6 +81,12 @@ class BasicLeds {
     BasicLeds(int beginLedNumber, int endLedNumber, CRGB ledArrayAddress[]);
 
     void setLeds(int red, int green, int blue, bool isManual);
+
+    int getRed();
+
+    int getGreen();
+
+    int getBlue();
 
     void clearLEDs();
 };

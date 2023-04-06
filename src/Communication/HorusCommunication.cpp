@@ -1,6 +1,11 @@
 // Interal Imports
-#include "Communication\HorusCommunication.h"
+#include "HorusCommunication.h"
 // Update the system data
+
+HorusCommunication::HorusCommunication() {
+
+}
+
 // @returns Weither an update has been preformed
 bool HorusCommunication::packetUpdate() {
     bool packetReceived = false;
@@ -153,6 +158,8 @@ bool HorusCommunication::packetUpdate() {
         }
         packetReceived = true;
     }
+    motorProcessor();
+    ledProcessor();
     return packetReceived;
 }
 
@@ -315,4 +322,148 @@ void HorusCommunication::livelinessProbe() {
         fan_time_liveliness = millis() + probe_interval;
     }
     Serial.flush();
+}
+
+/*
+ * Based on the state of the home change the LEDs 
+*/
+void HorusLeds::ledProcessor(HorusCommunication* horusCommunication) {
+  // Check the kitchen and set the west side lights
+  if (kitchen_motion || rice_cooker || toaster || air_fryer) { 
+    autoWestLeds.setRed(255);
+    autoWestLeds.setGreen(0);
+    autoWestLeds.setBlue(0);
+    autoWestLeds.setIsOn(true);
+    setWest();
+  }
+  else {
+    turnOffWest();
+  }
+
+  // Check the bedroom and set teh east side lights
+  if (bedroom_motion || computer) {
+    autoEastLeds.setRed(67);
+    autoEastLeds.setGreen(0);
+    autoEastLeds.setBlue(112);
+    autoEastLeds.setIsOn(true);
+    setEast();
+  }
+  else {
+    turnOffEast();
+  }
+
+  // Check the livingroom and set the north side lights
+  if (tv) { // TODO: Add Livingroom Motion
+    autoNorthLeds.setRed(0);
+    autoNorthLeds.setGreen(255);
+    autoNorthLeds.setBlue(0);
+    autoNorthLeds.setIsOn(true);
+    setNorth();
+  }
+  else {
+    turnOffNorth();
+  }
+
+  // Check the Bathroom and set the southern side lights
+  if (bathroom_motion) {
+    autoSouthLeds.setRed(0);
+    autoSouthLeds.setGreen(0);
+    autoSouthLeds.setBlue(255);
+    autoSouthLeds.setIsOn(true);
+    setSouth();
+  }
+  else if (shower) {
+    autoSouthLeds.setRed(0);
+    autoSouthLeds.setGreen(100);
+    autoSouthLeds.setBlue(100);
+    autoSouthLeds.setIsOn(true);
+    setSouth();
+  }
+  else {
+    turnOffSouth();
+  }
+
+  // Check if I am home and set the top lights
+  if (isHome && !in_bed) {
+    autoTopLeds.setRed(255);
+    autoTopLeds.setGreen(255);
+    autoTopLeds.setBlue(255);
+    autoTopLeds.setIsOn(true);
+    setTop();
+  }
+  else {
+    turnOffTop();
+  }
+}
+
+/*
+ * Based on the state of the home change the LEDs 
+*/
+void HorusLeds::motorProcessor() {
+  // Check the kitchen and set the west side lights
+  if (kitchen_motion || rice_cooker || toaster || air_fryer) { 
+    autoWestLeds.setRed(255);
+    autoWestLeds.setGreen(0);
+    autoWestLeds.setBlue(0);
+    autoWestLeds.setIsOn(true);
+    setWest();
+  }
+  else {
+    turnOffWest();
+  }
+
+  // Check the bedroom and set teh east side lights
+  if (bedroom_motion || computer) {
+    autoEastLeds.setRed(67);
+    autoEastLeds.setGreen(0);
+    autoEastLeds.setBlue(112);
+    autoEastLeds.setIsOn(true);
+    setEast();
+  }
+  else {
+    turnOffEast();
+  }
+
+  // Check the livingroom and set the north side lights
+  if (tv) { // TODO: Add Livingroom Motion
+    autoNorthLeds.setRed(0);
+    autoNorthLeds.setGreen(255);
+    autoNorthLeds.setBlue(0);
+    autoNorthLeds.setIsOn(true);
+    setNorth();
+  }
+  else {
+    turnOffNorth();
+  }
+
+  // Check the Bathroom and set the southern side lights
+  if (bathroom_motion) {
+    autoSouthLeds.setRed(0);
+    autoSouthLeds.setGreen(0);
+    autoSouthLeds.setBlue(255);
+    autoSouthLeds.setIsOn(true);
+    setSouth();
+  }
+  else if (shower) {
+    autoSouthLeds.setRed(0);
+    autoSouthLeds.setGreen(100);
+    autoSouthLeds.setBlue(100);
+    autoSouthLeds.setIsOn(true);
+    setSouth();
+  }
+  else {
+    turnOffSouth();
+  }
+
+  // Check if I am home and set the top lights
+  if (isHome && !in_bed) {
+    autoTopLeds.setRed(255);
+    autoTopLeds.setGreen(255);
+    autoTopLeds.setBlue(255);
+    autoTopLeds.setIsOn(true);
+    setTop();
+  }
+  else {
+    turnOffTop();
+  }
 }

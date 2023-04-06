@@ -2,18 +2,18 @@
 // External Imports
 #include <Arduino.h>
 // Internal Imports
-#include "leds.h"
-#include "communication.h"
-#include "fan.h"
-#include "motors.h"
-#include "solenoid.h"
+#include "HorusCommunication.h"
+#include "HorusMotors.h"
+#include "HorusLeds.h"
+#include "Basic Components\BasicSolenoid.h"
+#include "Basic Components\BasicFan.h"
 #include "config.h"
 
 HorusCommunication* communication;
-HorusFan* fan;
+BasicFan* fan;
 HorusLeds* leds;
-HorusMotor* motor;
-HorusSolenoid* solenoid;
+HorusMotors* motors;
+BasicSolenoid* solenoid;
 
 void serialEvent();
 

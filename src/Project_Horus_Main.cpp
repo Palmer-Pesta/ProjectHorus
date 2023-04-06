@@ -2,7 +2,7 @@
 #include "Project_Horus_Main.h"
 
 void serialEvent() {
-  communication.packetUpdate();
+  // Packet Update
 }
 
 void setup() {
@@ -11,18 +11,13 @@ void setup() {
   // Wait for serial communication to be established
   while (!Serial) {delay(10);}
 
-  // Run the setup
-  
-  HorusMotor* motors = new HorusMotor();
-  HorusFan* fan = new HorusFan();
-  HorusLeds* leds = new HorusLeds();
-  HorusSolenoid* solenoid = new HorusSolenoid();
-
-  communication.livelinessSetup();
+  fan = new BasicFan();
+  solenoid = new BasicSolenoid();
+  leds = new HorusLeds();
+  motors = new HorusMotors();
+  communication = new HorusCommunication(); // Unfinished
 };
 
 void loop() {
-  solenoid.lockProcessor(communication.isLocked);
-  leds.ledProcessor(&communication);
-  communication.livelinessProbe();
+
 };

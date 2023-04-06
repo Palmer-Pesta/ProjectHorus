@@ -41,20 +41,10 @@ int ManualLedAction::getBlue() {
   return blue;
 }
 
-void ManualLedAction::setBrightness(int brightnessValue) {
-  brightness = brightnessValue;
-}
-
-int ManualLedAction::getBrightness() {
-  return brightness;
-}
-
-void ManualLedAction::setIsOn(bool state) {
-  isOn = state;
-}
-
-bool ManualLedAction::getIsOn() {
-  return isOn;
+void ManualLedAction::setColor(int red, int green, int blue) {
+  setRed(red);
+  setGreen(green);
+  setBlue(blue);
 }
 
 void ManualLedAction::setTimestamp(unsigned long setTime) {
@@ -94,20 +84,10 @@ int AutomaticLed::getBlue() {
   return blue;
 }
 
-void AutomaticLed::setBrightness(int brightnessValue) {
-  brightness = brightnessValue;
-}
-
-int AutomaticLed::getBrightness() {
-  return brightness;
-}
-
-void AutomaticLed::setIsOn(bool state) {
-  isOn = state;
-}
-
-bool AutomaticLed::getIsOn() {
-  return isOn;
+void AutomaticLed::setColor(int red, int green, int blue) {
+  setRed(red);
+  setGreen(green);
+  setBlue(blue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,21 +99,6 @@ BasicLeds::BasicLeds(int beginLedNumber, int endLedNumber, CRGB ledArrayAddress[
   leds = ledArrayAddress;
   beginLed = beginLedNumber;
   endLed = endLedNumber;
-}
-
-void BasicLeds::setLeds(int red, int green, int blue, bool isManual) {
-  if (isManual) {
-    manualLed->setRed(red);
-    manualLed->setGreen(green);
-    manualLed->setBlue(blue);
-    manualLed->setTimestamp(millis());
-  }
-  else {
-    automaticLed->setRed(red);
-    automaticLed->setGreen(green);
-    automaticLed->setBlue(blue);
-  }
-  updateLEDs();
 }
 
 void BasicLeds::updateLEDs() {
@@ -150,9 +115,40 @@ void BasicLeds::updateLEDs() {
   FastLED.show();
 }
 
-void BasicLeds::clearLEDs() {
-  for (int i = beginLed; i<=endLed; i++) {
-    leds[i] = CRGB(0, 0, 0);
+void BasicLeds::setLeds(int red, int green, int blue, bool isManual) {
+  if (isManual) {
+    manualLed->setColor(red, green, blue);
+    manualLed->setTimestamp(millis());
   }
-  FastLED.show();
+  else {
+    automaticLed->setColor(red, green, blue);
+  }
+  updateLEDs();
+}
+
+void BasicLeds::clearLEDs() {
+  manualLed->setColor(0, 0, 0);
+  automaticLed->setColor(0, 0, 0);
+  updateLEDs();
+}
+
+int BasicLeds::getRed() {
+  if (millis() - manualLed->getTimestamp() < LED_MANUAL_TIMEOUT) {
+    return manualLed->getRed();
+  }
+  return automaticLed->getRed();
+}
+
+int BasicLeds::getGreen() {
+  if (millis() - manualLed->getTimestamp() < LED_MANUAL_TIMEOUT) {
+    return manualLed->getGreen();
+  }
+  return automaticLed->getGreen();
+}
+
+int BasicLeds::getBlue() {
+  if (millis() - manualLed->getTimestamp() < LED_MANUAL_TIMEOUT) {
+    return manualLed->getBlue();
+  }
+  return automaticLed->getBlue();
 }
