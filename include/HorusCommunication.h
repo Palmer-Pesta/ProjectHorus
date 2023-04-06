@@ -2,10 +2,6 @@
 // External Imports
 #include <Arduino.h>
 // Internal Imports
-#include "Fan.h"
-#include "Leds.h"
-#include "Motors.h"
-#include "Solenoid.h"
 #include "Config.h"
 
 class HorusCommunication {      
@@ -22,8 +18,7 @@ class HorusCommunication {
     unsigned long top_time_liveliness;
     unsigned long fan_time_liveliness;
     unsigned long current_time_liveliness;
-    
-  public:
+
     int internalTemperture;
     bool isLocked = true;
     bool isHome = false;
@@ -41,9 +36,13 @@ class HorusCommunication {
     bool in_bed = false;
     bool power = true;
     
+  public:
+
     bool packetUpdate();
 
     void livelinessSetup();
 
     void livelinessProbe();
+
+    bool 
 };

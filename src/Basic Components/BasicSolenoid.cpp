@@ -1,26 +1,23 @@
 // Internal Imports
-#include "Solenoid.h"
+#include "Basic Components/BasicSolenoid.h"
 
-void HorusSolenoid::HorusSolenoid() {
+BasicSolenoid::BasicSolenoid() {
   isLocked = true;
-}
-
-void HorusSolenoid::solenoidSetup() {
   pinMode(SOLENOID_PIN, OUTPUT);
   lastUnlocked = millis() - UNLOCK_TIMEOUT;
 }
 
-void HorusSolenoid::lockPanel() {
+void BasicSolenoid::lockPanel() {
   digitalWrite(SOLENOID_PIN, LOW);
   isLocked = true;
 }
 
-void HorusSolenoid::unlockPanel() {
+void BasicSolenoid::unlockPanel() {
   digitalWrite(SOLENOID_PIN, HIGH);
   isLocked = false;
 }
 
-void HorusSolenoid::setState(bool isLocked) {
+void BasicSolenoid::setState(bool isLocked) {
   if (isLocked == 1) {
     lockPanel();
   }
@@ -29,6 +26,6 @@ void HorusSolenoid::setState(bool isLocked) {
   }
 }
 
-bool HorusSolenoid::getState() {
+bool BasicSolenoid::getState() {
   return isLocked;
 }

@@ -4,18 +4,18 @@
 // Internal Imports
 #include "Config.h"
 
-class HorusSolenoid {      
+class BasicSolenoid {      
   private:
     unsigned long lastUnlocked;
     
     bool isLocked;
 
-  public:
-    void solenoidSetup();
-
     void lockPanel();
 
     void unlockPanel();
+
+  public:
+    BasicSolenoid();
 
     void setState(bool isLocked);
 

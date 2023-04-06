@@ -1,5 +1,5 @@
 // Interal Imports
-#include "Communication.h"
+#include "Communication\HorusCommunication.h"
 // Update the system data
 // @returns Weither an update has been preformed
 bool HorusCommunication::packetUpdate() {

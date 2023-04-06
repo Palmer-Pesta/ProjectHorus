@@ -4,12 +4,12 @@
 // Internal Imports
 #include "Config.h"
 
-class HorusFan {      
+class BasicFan {      
   private:
     int current_fan_speed; 
     
   public:        
-    void fanSetup();
+    BasicFan();
     
     void setPwmSpeed(int power);
 

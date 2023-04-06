@@ -1,18 +1,17 @@
 // Internal Imports
-#include "Fan.h"
+#include "Basic Components\BasicFan.h"
 
-           
-void HorusFan::fanSetup() {
+BasicFan::BasicFan() {
   pinMode(FAN_CONTROL_PIN, OUTPUT);
   setPwmSpeed(0);
 }
 
 // @param int power from 0-100
-void HorusFan::setPwmSpeed(int power) {
+void BasicFan::setPwmSpeed(int power) {
   analogWrite(FAN_CONTROL_PIN, power / 100 * 255);
   current_fan_speed = power / 100 * 255;
 }
 
-int HorusFan::getPwmSpeed() {
+int BasicFan::getPwmSpeed() {
   return current_fan_speed;
 }

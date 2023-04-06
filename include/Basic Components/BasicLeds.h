@@ -4,7 +4,6 @@
 #include <Arduino.h>
 // Internal Imports
 #include "Config.h"
-#include "Communication.h"
 
 class ManualLedAction {
   private:
@@ -21,6 +20,8 @@ class ManualLedAction {
     unsigned long timestamp = millis() - LED_MANUAL_TIMEOUT;
 
   public:
+    ManualLedAction();
+
     void setRed(int redValue);
 
     int getRed();
@@ -59,6 +60,8 @@ class AutomaticLed {
     bool isOn = false;
 
   public:
+    AutomaticLed();
+
     void setRed(int redValue);
 
     int getRed();
@@ -80,54 +83,24 @@ class AutomaticLed {
     bool getIsOn();
 };
 
-class HorusLeds {      
+class BasicLeds {      
   private:
-    CRGB leds[NUM_LEDS]; // The array of LED colors
+    ManualLedAction* manualLed;
 
-    void ledSetup();
+    AutomaticLed* automaticLed;
 
     void updateLEDs();
 
-    bool clearLEDs();
+    int beginLed;
+    
+    int endLed;
+    
+    CRGB* leds;
 
-    void rgb_to_hsv(double r, double g, double b, int brightness, int ledNumber);
+  public:    
+    BasicLeds(int beginLedNumber, int endLedNumber, CRGB ledArrayAddress[]);
 
-  public:        
-    // Manual Actions LED Commands
-    ManualLedAction manualWestLeds;
-    ManualLedAction manualEastLeds;
-    ManualLedAction manualNorthLeds;
-    ManualLedAction manualSouthLeds;
-    ManualLedAction manualTopLeds;
+    void setLeds(int red, int green, int blue, bool isManual);
 
-    // Automatic Actions LED Commands
-    AutomaticLed autoWestLeds;
-    AutomaticLed autoEastLeds;
-    AutomaticLed autoNorthLeds;
-    AutomaticLed autoSouthLeds;
-    AutomaticLed autoTopLeds;
-
-    void turnOffWest();
-
-    void turnOffEast();
-
-    void turnOffNorth();
-
-    void turnOffSouth();
-
-    void turnOffTop();
-
-    // Update LEDs
-    void setWest();
-
-    void setEast();
-
-    void setNorth();
-
-    void setSouth();
-
-    void setTop();
-
-    // Processor
-    void ledProcessor(HorusCommunication* horusCommunication);
+    void clearLEDs();
 };
