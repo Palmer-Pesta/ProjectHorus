@@ -37,10 +37,8 @@ bool BasicMotor::customStep(int amountOfRotation) {
       }
       return false;
     }
-    else {
-      return true;
-    }
   }
+  return true;
 }
 
 void BasicMotor::ascend() {

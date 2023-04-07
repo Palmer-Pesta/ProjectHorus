@@ -80,7 +80,7 @@ class BasicLeds {
   public:    
     BasicLeds(int beginLedNumber, int endLedNumber, CRGB ledArrayAddress[]);
 
-    void setLeds(int red, int green, int blue, bool isManual);
+    void setLeds(int red, int green, int blue, unsigned long timestamp = 0);
 
     int getRed();
 

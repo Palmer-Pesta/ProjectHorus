@@ -18,7 +18,7 @@ void BasicSolenoid::unlockPanel() {
 }
 
 void BasicSolenoid::setState(bool isLocked) {
-  if (isLocked == 1) {
+  if (isLocked) {
     lockPanel();
   }
   else {

@@ -115,10 +115,10 @@ void BasicLeds::updateLEDs() {
   FastLED.show();
 }
 
-void BasicLeds::setLeds(int red, int green, int blue, bool isManual) {
-  if (isManual) {
+void BasicLeds::setLeds(int red, int green, int blue, unsigned long timestamp = 0) {
+  if (timestamp != 0) {
     manualLed->setColor(red, green, blue);
-    manualLed->setTimestamp(millis());
+    manualLed->setTimestamp(timestamp);
   }
   else {
     automaticLed->setColor(red, green, blue);

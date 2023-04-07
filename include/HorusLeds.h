@@ -27,9 +27,9 @@ class HorusLeds {
   public:
     HorusLeds();
 
-    void setColors(String section, int red, int green, int blue, bool manual);
+    void setColors(String section, int red, int green, int blue, unsigned long timestamp = 0);
 
-    void turnOffLights(String section, bool manual);
+    void turnOffLights(String section, unsigned long timestamp = 0);
 
     int getRed(String section);
 

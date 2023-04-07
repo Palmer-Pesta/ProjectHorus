@@ -34,14 +34,14 @@ BasicLeds* HorusLeds::getSection(String section) {
   return nullptr;
 }
 
-void HorusLeds::setColors(String section, int red, int green, int blue, bool manual) {
+void HorusLeds::setColors(String section, int red, int green, int blue, unsigned long timestamp = 0) {
   BasicLeds* currentSection = getSection(section);
-  currentSection->setLeds(red, green, blue, manual);
+  currentSection->setLeds(red, green, blue, timestamp);
 }
 
-void HorusLeds::turnOffLights(String section, bool manual) {
+void HorusLeds::turnOffLights(String section, unsigned long timestamp = 0) {
   BasicLeds* currentSection = getSection(section);
-  currentSection->setLeds(0, 0, 0, manual);
+  currentSection->setLeds(0, 0, 0, timestamp);
 }
 
 int HorusLeds::getRed(String section) {

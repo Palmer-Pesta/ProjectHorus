@@ -32,6 +32,7 @@
 //  How many steps per turn
 #define STEPS_PER_REVOLUTION 200
 #define BASE_MOTOR_SPEED 30
+#define MAX_STEP_NUM 280 // Needs tuned
 
 // Limit Switch Pins
 #define WEST_LIMIT_SWITCH_UPPER 40
